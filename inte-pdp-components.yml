@@ -1,0 +1,297 @@
+openapi: 3.0.3
+info:
+  title: INTE PDP Components
+  description: OAS Components acting as a contract for data published by INTE to PDP.
+  version: v1
+paths: { }
+components:
+  schemas:
+    # Angebotsportfolio-Tool
+    Konzept:
+      description: "Konzept aka Angebot aka Campaign defined in Angebotsportfolio-Tool which also is the Master for Konzept-IDs."
+      type: object
+      required: [ konzeptId, bezeichnung ]
+      properties:
+        konzeptId:
+          type: string
+          example: "A00104"
+          description: "Konzept-ID aka Angebots-ID aka Offer-ID."
+        bezeichnung:
+          type: string
+          example: "Echo der Zeit"
+          description: "Official name of the Konzept."
+        unternehmenseinheit:
+          type: string
+          example: "SRF"
+          description: "Organisational unit that has the ownership."
+        kurzbeschreibung:
+          type: string
+          example: "«Echo der Zeit» ist die älteste politische Hintergrundsendung von Radio SRF: Seit 1945 vermittelt 
+                    die Sendung täglich die wichtigsten Nachrichten, Berichte, Reportagen, Interviews und Analysen über 
+                    das aktuelle Zeitgeschehen"
+          description: "Short description of the Konzept."
+        vermarktungen:
+          type: array
+          items:
+            $ref: "#/components/schemas/KonzeptVermarktung"
+
+    KonzeptVermarktung:
+      description: "Describes for which channels and at which schedules the Sendungen of a Konzept are planned to be published."
+      type: object
+      required: [ publikationskanal ]
+      properties:
+        publikationskanal:
+          $ref: "#/components/schemas/KonzeptPublikationskanal"
+        publikationsregeln:
+          type: array
+          items:
+            $ref: "#/components/schemas/KonzeptPublikationsregel"
+        ausnahmen:
+          type: array
+          description: "Specific dates at which a Sendung of the Konzept shall not be played out." # TODO Ferid fragen, ob dann gespielt oder nicht gespielt werden soll.
+          items:
+            type: string
+            format: date
+            example: "2023-07-21"
+
+    KonzeptPublikationskanal:
+      description: "A publication-channel of SRF or a third party."
+      type: object
+      required: [ id, bezeichnung ]
+      properties:
+        id:
+          type: string
+          example: "K00004"
+          description: "Unique ID."
+        bezeichnung:
+          type: string
+          example: "Radio SRF 1@Radio"
+          description: "Official name of the channel."
+        unternehmenseinheit:
+          type: string
+          example: "SRF"
+          description: "Organisational unit that has the ownership."
+        vektor:
+          $ref: "#/components/schemas/PublicationVector"
+
+    KonzeptPublikationsregel:
+      description: "Publication rule defining when a Konzept is planned to be published and optionally in which interval."
+      type: object
+      properties:
+        start:
+          type: string
+          format: date
+          example: "2023-07-21"
+          description: "Date at which the first playout is planned."
+        ende:
+          type: string
+          format: date
+          example: "2030-07-21"
+          description: "Date at which the last playout is planned."
+        zeit:
+          type: string
+          format: "HH:mm"
+          example: "17:30"
+          description: "Time within a day at which playouts are planned."
+        dauerInMin:
+          type: integer
+          example: "43"
+          description: "Duration in minutes a playout usually takes."
+        wiederholungByDay:
+          $ref: "#/components/schemas/ScheduleByDay"
+        wiederholungByMonth:
+          $ref: "#/components/schemas/ScheduleByMonth"
+        wiederholungByMonthDay:
+          $ref: "#/components/schemas/ScheduleByMonthDay"
+        wiederholungsrateDays:
+          type: integer
+          example: "3"
+          description: "Planned frequency for repetition in days. E.g. every 3 days."
+        wiederholungsrateWeeks:
+          type: integer
+          example: "2"
+          description: "Planned frequency for repetition in weeks. E.g. every 2 weeks."
+        wiederholungsrateMonths:
+          type: integer
+          example: "6"
+          description: "Planned frequency for repetition in months. E.g. every 6 months."
+
+    # OpenMedia
+    OpenMediaRunning:
+      description: "Running aka Episode aka Program planned in OpenMedia. Internally OpenMedia uses the term Document for this Domain-Object."
+      type: object
+      required: [ id, titel ]
+      properties:
+        id:
+          type: string
+          example: "urn:openmedia:25647147-2092-4535-a503-3db038ec7ecb:000000020088F056"
+          description: "Unique local identifier within OpenMedia."
+        konzeptId:
+          type: string
+          example: "A00397"
+          description: "Konzept-ID aka Angebots-ID aka Offer-ID."
+        produktionsId:
+          type: string
+          example: "AUDI20230623_RS_0015"
+          description: "Produktions-ID that OpenMedia retrieved from Digas by a look up with the Konzept-ID."
+        titel:
+          type: string
+          example: "Ratgeber 07.07.23"
+          description: "Title of the Running."
+        storyTitel:
+          type: string
+          example: "Das passende Kopfkissen finden"
+          description: "Title of the story."
+        storyLead:
+          type: string
+          example: "Das Kopfkissen sollte nicht nur kuschelig sein, sondern in erster Linie Kopf und Nacken stützen."
+          description: "Lead aka headline of the story."
+        produzent:
+          type: string
+          example: "Maria Kressbach"
+          description: "Name of the producer."
+        moderation:
+          type: string
+          example: "Stefan Siegenthaler"
+          description: "Name of the host."
+        geplantePublikationszeit:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The planned publication date and time in UTC."
+        liveSendezeitStart:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The effective start time of a live publication in UTC. Only set for publicationType = 'LIVE'."
+        liveSendezeitEnde:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The effective end time of a live publication in UTC. Only set for publicationType = 'LIVE'."
+        publicationType:
+          $ref: '#/components/schemas/PublicationType'
+        assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpenMediaRunningAsset'
+
+    OpenMediaRunningAsset:
+      description: "Media assets belonging to a Running of OpenMedia."
+      required:
+        - titel
+        - dateiname
+        - url
+      properties:
+        titel:
+          type: string
+          example: "Kopfkissen Deluxe"
+          description: "Title for the media asset."
+        description:
+          type: string
+          example: "Mann stuetzt Kopf auf einem Wollkopfkissen."
+          description: "Description for the media asset."
+        dateiname:
+          type: string
+          example: "kopfkissen-1337.png"
+          description: "Original filename as stored on the file-system in OpenMedia."
+        url:
+          type: string
+          example: "https://programmrastervorschau-stage.s3.eu-central-1.amazonaws.com/additional-assets/AUDI20230623_RS_0015/image/kopfkissen-1337.png"
+          description: "URL to the storage (Amazon S3) INTE has uploaded the media asset to."
+
+    # WhatsOn
+    WhatsOnProdukt:
+      description: "Produkt aka Program planned in WhatsOn."
+      type: object
+      required: [ id ]
+      properties:
+        id:
+          type: string
+          example: "10029"
+          description: "Unique local ID of the Produkt in WhatsOn (Produkt-ID)."
+        konzeptId:
+          type: string
+          example: "A00053"
+          description: "Konzept-ID aka Angebots-ID aka Offer-ID."
+
+
+    # Common
+    PublicationType:
+      type: string
+      description: "The type of a publication."
+      nullable: true
+      enum:
+        - FILE
+        - LIVE
+
+    PublicationVector:
+      type: string
+      description: "The vector for publication."
+      nullable: true
+      enum:
+        - DIGITAL
+        - PRINT
+        - RADIO
+        - TV
+
+    ScheduleByDay:
+      description: "Describes a schedule by days - meaning: at which days of the week a Sendung of an Angebot is planned to be played out."
+      type: object
+      nullable: true
+      properties:
+        dayOfWeek:
+          type: array
+          items:
+            $ref: "#/components/schemas/DayOfWeek"
+
+    ScheduleByMonth:
+      description: "Describes a schedule by month - meaning: in which month a Sendung of an Angebot is planned to be played out."
+      type: object
+      nullable: true
+      properties:
+        dayOfWeek:
+          type: array
+          items:
+            $ref: "#/components/schemas/Month"
+
+    ScheduleByMonthDay:
+      description: "Describes a schedule by a specific day in a month - meaning: at which day of a month a Sendung of an Angebot is planned to be published."
+      type: object
+      nullable: true
+      properties:
+        dayOfMonth:
+          type: array
+          items:
+            type: integer
+
+    DayOfWeek:
+      type: string
+      description: "Day of week."
+      nullable: false
+      enum:
+        - MONDAY
+        - TUESDAY
+        - WEDNESDAY
+        - THURSDAY
+        - FRIDAY
+        - SATURDAY
+        - SUNDAY
+
+    Month:
+      type: string
+      description: "Month"
+      nullable: false
+      enum:
+        - JANUARY
+        - FEBRUARY
+        - MARCH
+        - APRIL
+        - MAY
+        - JUNE
+        - JULY
+        - AUGUST
+        - SEPTEMBER
+        - OCTOBER
+        - NOVEMBER
+        - DECEMBER
