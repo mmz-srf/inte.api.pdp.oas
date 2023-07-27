@@ -190,6 +190,7 @@ components:
 
     OpenMediaRunningAsset:
       description: "Media assets belonging to a Running of OpenMedia."
+      type: object
       required:
         - titel
         - dateiname
