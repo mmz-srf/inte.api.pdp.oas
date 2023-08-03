@@ -119,6 +119,10 @@ components:
           type: integer
           example: "6"
           description: "Planned frequency for repetition in months. E.g. every 6 months."
+        wiederholungByMonthWeek:
+          type: integer
+          example: "2"
+          description: "Planned frequency for repetition in month-weeks. E.g. every 2nd week in a month. If combined with 'wiederholungByDay' the meaning would be e.g. 'every 2nd Monday of a month'"
         erstausstrahlung:
           type: boolean
           example: "true"
