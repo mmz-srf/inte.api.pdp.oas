@@ -98,11 +98,22 @@ components:
           example: "43"
           description: "Duration in minutes a publication usually will take."
         wiederholungByDay:
-          $ref: "#/components/schemas/ScheduleByDay"
+          type: array
+          items:
+            $ref: "#/components/schemas/DayOfWeek"
         wiederholungByMonth:
-          $ref: "#/components/schemas/ScheduleByMonth"
+          type: array
+          items:
+            $ref: "#/components/schemas/Month"
+        wiederholungByMonthWeek:
+          type: array
+          items:
+            type: integer
+          description: "Planned frequency for repetition in month-weeks. E.g. every 2nd week in a month. If combined with 'wiederholungByDay' the meaning would be e.g. 'every 2nd Monday of a month'"
         wiederholungByMonthDay:
-          $ref: "#/components/schemas/ScheduleByMonthDay"
+          type: array
+          items:
+            type: integer
         wiederholungsrateMinutes:
           type: integer
           example: "30"
@@ -119,10 +130,6 @@ components:
           type: integer
           example: "6"
           description: "Planned frequency for repetition in months. E.g. every 6 months."
-        wiederholungByMonthWeek:
-          type: integer
-          example: "2"
-          description: "Planned frequency for repetition in month-weeks. E.g. every 2nd week in a month. If combined with 'wiederholungByDay' the meaning would be e.g. 'every 2nd Monday of a month'"
         erstausstrahlung:
           type: boolean
           example: "true"
@@ -251,36 +258,6 @@ components:
         - PRINT
         - RADIO
         - TV
-
-    ScheduleByDay:
-      description: "Describes a schedule by days - meaning: at which days of the week a Sendung of an Angebot is planned to be published."
-      type: object
-      nullable: true
-      properties:
-        dayOfWeek:
-          type: array
-          items:
-            $ref: "#/components/schemas/DayOfWeek"
-
-    ScheduleByMonth:
-      description: "Describes a schedule by month - meaning: in which month a Sendung of an Angebot is planned to be published."
-      type: object
-      nullable: true
-      properties:
-        months:
-          type: array
-          items:
-            $ref: "#/components/schemas/Month"
-
-    ScheduleByMonthDay:
-      description: "Describes a schedule by a specific day in a month - meaning: at which day of a month a Sendung of an Angebot is planned to be published."
-      type: object
-      nullable: true
-      properties:
-        dayOfMonth:
-          type: array
-          items:
-            type: integer
 
     DayOfWeek:
       type: string
