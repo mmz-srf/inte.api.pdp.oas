@@ -38,10 +38,12 @@ components:
     KonzeptVermarktung:
       description: "Describes for which channels and at which schedules the Sendungen of a Konzept are planned to be published."
       type: object
-      required: [ publikationskanal ]
+      required: [ publikationskanalId ]
       properties:
-        publikationskanal:
-          $ref: "#/components/schemas/KonzeptPublikationskanal"
+        publikationskanalId:
+          type: string
+          example: "K00004"
+          description: "Reference to Kanal by ID."
         publikationsregeln:
           type: array
           items:
