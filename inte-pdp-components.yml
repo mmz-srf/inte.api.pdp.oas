@@ -137,33 +137,60 @@ components:
           example: "true"
           description: "Indicates whether this publication rule concerns the first publication or not."
 
-    # OpenMedia
-    OpenMediaRunning:
-      description: "Running aka Episode aka Program planned in OpenMedia. Internally OpenMedia uses the term Document for this Domain-Object."
+    OpenMediaSendungshinweis:
+      description: "Promotion of a product that will be released"
       type: object
-      required: [ id, titel ]
+      required: [ id, konzeptId, produktId, titel, lead ]
       properties:
         id:
           type: string
-          example: "urn:openmedia:25647147-2092-4535-a503-3db038ec7ecb:000000020088F056"
-          description: "Unique local identifier within OpenMedia."
+          example: "urn:openmedia:25647147-2092-4535-a503-3db038ec7ecb:000000020088F056_promotion"
+          description: "Unique local identifier within OpenMedia plus _promotion suffix"
         konzeptId:
           type: string
           example: "A00397"
           description: "Konzept-ID aka Angebots-ID aka Offer-ID."
-        produktionsId:
+        produktId:
           type: string
           example: "AUDI20230623_RS_0015"
           description: "Produktions-ID that OpenMedia retrieved from Digas by a look up with the Konzept-ID."
         titel:
           type: string
-          example: "Ratgeber 07.07.23"
-          description: "Title of the Running."
-        storyTitel:
+          example: "Das passende Kopfkissen finden"
+          description: "Title of the story."
+        lead:
+          type: string
+          example: "Das Kopfkissen sollte nicht nur kuschelig sein, sondern in erster Linie Kopf und Nacken stützen."
+          description: "Lead aka headline of the story."
+        geplantePublikationszeit:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The planned publication date and time in UTC."
+
+    # OpenMedia
+    OpenMediaRunning:
+      description: "Running aka Episode aka Program planned in OpenMedia. Internally OpenMedia uses the term Document for this Domain-Object."
+      type: object
+      required: [ id, konzeptId, produktId, titel, lead ]
+      properties:
+        id:
+          type: string
+          example: "urn:openmedia:25647147-2092-4535-a503-3db038ec7ecb:000000020088F056_release"
+          description: "Unique local identifier within OpenMedia plus _release suffix."
+        konzeptId:
+          type: string
+          example: "A00397"
+          description: "Konzept-ID aka Angebots-ID aka Offer-ID."
+        produktId:
+          type: string
+          example: "AUDI20230623_RS_0015"
+          description: "Produktions-ID that OpenMedia retrieved from Digas by a look up with the Konzept-ID."
+        titel:
           type: string
           example: "Das passende Kopfkissen finden"
           description: "Title of the story."
-        storyLead:
+        lead:
           type: string
           example: "Das Kopfkissen sollte nicht nur kuschelig sein, sondern in erster Linie Kopf und Nacken stützen."
           description: "Lead aka headline of the story."
@@ -192,10 +219,31 @@ components:
           description: "The effective end time of a live publication in UTC. Only set for publicationType = 'LIVE'."
         publicationType:
           $ref: '#/components/schemas/PublicationType'
+        beitraege:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpenMediaRunningBeitrag'
         assets:
           type: array
           items:
             $ref: '#/components/schemas/OpenMediaRunningAsset'
+
+    OpenMediaRunningBeitrag:
+      description: "Part of a OpenMediaRunning"
+      type: object
+      required: [produktElementId, titel, lead ]
+      properties:
+        produktElementId:
+          type: string
+          example: "AUDI20230829_RS_0031_0002"
+        titel:
+          type: string
+          example: "Libyens Trauma nach den Fluten"
+          description: "Title of the story"
+        lead:
+          type: string
+          example: "Vor einer Woche fegte ein gewaltiger Sturm über die ostlibysche Küste..."
+          description: "Lead of the story"
 
     OpenMediaRunningAsset:
       description: "Media assets belonging to a Running of OpenMedia."
@@ -226,6 +274,36 @@ components:
           example: "https://programmrastervorschau-stage.s3.eu-central-1.amazonaws.com/additional-assets/AUDI20230623_RS_0015/image/kopfkissen-1337.png"
           description: "URL to the storage (Amazon S3) INTE has uploaded the media asset to."
 
+
+    DigasAudioFileMetadata:
+      description: "Metadata about a published audio file"
+      required: [ konzeptId, produktId, fassungsId, url ]
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/MediaType"
+        konzeptId:
+          type: string
+          example: "A00125"
+        produktId:
+          type: string
+          example: "AUDI20230905_RS_0006"
+        produktElementId:
+          type: string
+          example: "AUDI20230905_RS_0006_0002"
+        fassungsId:
+          type: string
+          example: "AUDI20230905_RS_0006_APP_02"
+        titel:
+          type: string
+          example: "Espresso"
+          description: "Title for the media asset."
+        url:
+          type: string
+          example: "https://srf-media-storage-stage.s3.eu-central-1.amazonaws.com/incoming-audio/AUDI20230905_RS_0006/audio/AUDI20230905_RS_0006_APP_01.wav"
+          description: "URL to the storage (Amazon S3) INTE has uploaded the media asset to."
+
+
     # WhatsOn
     WhatsOnProdukt:
       description: "Produkt aka Program planned in WhatsOn."
@@ -250,6 +328,14 @@ components:
       enum:
         - FILE
         - LIVE
+
+    MediaType:
+      type: string
+      description: "Media File Type"
+      nullable: false
+      enum:
+        - VIDEO
+        - AUDIO
 
     PublicationVector:
       type: string
