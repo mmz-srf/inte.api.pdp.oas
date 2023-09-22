@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: INTE PDP Components
   description: OAS Components acting as a contract for data published by INTE to PDP.
-  version: v1
+  version: v1.1.1
 paths: { }
 components:
   schemas:
@@ -137,47 +137,16 @@ components:
           example: "true"
           description: "Indicates whether this publication rule concerns the first publication or not."
 
-    OpenMediaSendungshinweis:
-      description: "Promotion of a product that will be released"
-      type: object
-      required: [ id, konzeptId, produktId, titel, lead ]
-      properties:
-        id:
-          type: string
-          example: "urn:openmedia:25647147-2092-4535-a503-3db038ec7ecb:000000020088F056_promotion"
-          description: "Unique local identifier within OpenMedia plus _promotion suffix"
-        konzeptId:
-          type: string
-          example: "A00397"
-          description: "Konzept-ID aka Angebots-ID aka Offer-ID."
-        produktId:
-          type: string
-          example: "AUDI20230623_RS_0015"
-          description: "Produktions-ID that OpenMedia retrieved from Digas by a look up with the Konzept-ID."
-        titel:
-          type: string
-          example: "Das passende Kopfkissen finden"
-          description: "Title of the story."
-        lead:
-          type: string
-          example: "Das Kopfkissen sollte nicht nur kuschelig sein, sondern in erster Linie Kopf und Nacken stützen."
-          description: "Lead aka headline of the story."
-        geplantePublikationszeit:
-          type: string
-          format: date-time
-          example: "2021-10-11T15:00:00Z"
-          description: "The planned publication date and time in UTC."
-
     # OpenMedia
     OpenMediaRunning:
       description: "Running aka Episode aka Program planned in OpenMedia. Internally OpenMedia uses the term Document for this Domain-Object."
       type: object
-      required: [ id, konzeptId, produktId, titel, lead ]
+      required: [ id, konzeptId, produktId, titel, lead, moderation ]
       properties:
         id:
           type: string
-          example: "urn:openmedia:25647147-2092-4535-a503-3db038ec7ecb:000000020088F056_release"
-          description: "Unique local identifier within OpenMedia plus _release suffix."
+          example: "urn:openmedia:25647147-2092-4535-a503-3db038ec7ecb:000000020088F056"
+          description: "Unique local identifier within OpenMedia."
         konzeptId:
           type: string
           example: "A00397"
@@ -186,6 +155,8 @@ components:
           type: string
           example: "AUDI20230623_RS_0015"
           description: "Produktions-ID that OpenMedia retrieved from Digas by a look up with the Konzept-ID."
+        maturityLevel:
+          $ref: '#/components/schemas/MaturityLevel'
         titel:
           type: string
           example: "Das passende Kopfkissen finden"
@@ -274,7 +245,7 @@ components:
           example: "https://programmrastervorschau-stage.s3.eu-central-1.amazonaws.com/additional-assets/AUDI20230623_RS_0015/image/kopfkissen-1337.png"
           description: "URL to the storage (Amazon S3) INTE has uploaded the media asset to."
 
-
+    # Audio
     DigasAudioFileMetadata:
       description: "Metadata about a published audio file"
       required: [ konzeptId, produktId, fassungsId, url ]
@@ -297,7 +268,7 @@ components:
         titel:
           type: string
           example: "Espresso"
-          description: "Title for the media asset."
+          description: "Title representing the content of the media asset. Possibly not a public title."
         url:
           type: string
           example: "https://srf-media-storage-stage.s3.eu-central-1.amazonaws.com/incoming-audio/AUDI20230905_RS_0006/audio/AUDI20230905_RS_0006_APP_01.wav"
@@ -328,6 +299,16 @@ components:
       enum:
         - FILE
         - LIVE
+
+
+    MaturityLevel:
+      type: string
+      description: "The maturity of a OpenMediaRunning"
+      nullable: false
+      enum:
+        - SENDEHINWEIS
+        - ONLINEPUBLIKATION
+
 
     MediaType:
       type: string
