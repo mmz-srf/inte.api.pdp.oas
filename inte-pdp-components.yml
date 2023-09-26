@@ -188,6 +188,16 @@ components:
           format: date-time
           example: "2021-10-11T15:00:00Z"
           description: "The effective end time of a live publication in UTC. Only set for publicationType = 'LIVE'."
+        episodenlauftext:
+          type: string
+          example: "... langer text ..."
+          description: "moderation text"
+        urls:
+          type: array
+          items:
+            type: string
+            example: "https://www.srf.ch/audio/ratgeber"
+            description: "url"
         publicationType:
           $ref: '#/components/schemas/PublicationType'
         beitraege:
