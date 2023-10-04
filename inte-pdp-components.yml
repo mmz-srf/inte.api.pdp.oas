@@ -24,6 +24,13 @@ components:
           type: string
           example: "SRF"
           description: "Organisational unit that has the ownership."
+        statusName:
+          type: string
+          example: "Publiziert / Laufend"
+          description: "Status des Angebots"
+        sendungenABisZ:
+          type: boolean
+          description: "Soll Sendung in A-Z Liste erscheinen"
         kurzbeschreibung:
           type: string
           example: "«Echo der Zeit» ist die älteste politische Hintergrundsendung von Radio SRF: Seit 1945 vermittelt 
@@ -48,13 +55,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/KonzeptPublikationsregel"
-        ausnahmen:
-          type: array
-          description: "Specific dates at which a Sendung of the Konzept shall not be published."
-          items:
-            type: string
-            format: date
-            example: "2023-10-11"
 
     KonzeptPublikationskanal:
       description: "A publication-channel of SRF or a third party."
@@ -136,6 +136,13 @@ components:
           type: boolean
           example: "true"
           description: "Indicates whether this publication rule concerns the first publication or not."
+        ausnahmen:
+          type: array
+          description: "Specific dates at which a Sendung of the Konzept shall not be published."
+          items:
+            type: string
+            format: date
+            example: "2023-10-11"
 
     # OpenMedia
     OpenMediaRunning:
