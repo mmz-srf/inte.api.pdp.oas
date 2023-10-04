@@ -178,16 +178,6 @@ components:
           format: date-time
           example: "2021-10-11T15:00:00Z"
           description: "The planned publication date and time in UTC."
-        liveSendezeitStart:
-          type: string
-          format: date-time
-          example: "2021-10-11T15:00:00Z"
-          description: "The effective start time of a live publication in UTC. Only set for publicationType = 'LIVE'."
-        liveSendezeitEnde:
-          type: string
-          format: date-time
-          example: "2021-10-11T15:00:00Z"
-          description: "The effective end time of a live publication in UTC. Only set for publicationType = 'LIVE'."
         episodenlauftext:
           type: string
           example: "... langer text ..."
@@ -258,7 +248,7 @@ components:
     # Audio
     DigasAudioFileMetadata:
       description: "Metadata about a published audio file"
-      required: [ konzeptId, produktId, fassungsId, url ]
+      required: [ konzeptId, produktId, fassungsId, url, publicationType ]
       type: object
       properties:
         type:
@@ -283,6 +273,18 @@ components:
           type: string
           example: "https://srf-media-storage-stage.s3.eu-central-1.amazonaws.com/incoming-audio/AUDI20230905_RS_0006/audio/AUDI20230905_RS_0006_APP_01.wav"
           description: "URL to the storage (Amazon S3) INTE has uploaded the media asset to."
+        publicationType:
+          $ref: '#/components/schemas/PublicationType'
+        liveSendezeitStart:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The effective start time of a live publication in UTC. Only set for publicationType = 'LIVE'."
+        liveSendezeitEnde:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The effective end time of a live publication in UTC. Only set for publicationType = 'LIVE'."
 
 
     # WhatsOn
