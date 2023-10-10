@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: INTE PDP Components
   description: OAS Components acting as a contract for data published by INTE to PDP.
-  version: v1.1.1
+  version: v1.3.0
 paths: { }
 components:
   schemas:
