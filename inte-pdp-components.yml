@@ -189,6 +189,8 @@ components:
           type: string
           example: "... langer text ..."
           description: "moderation text"
+        image:
+          $ref: '#/components/schemas/RokkaIoImage'
         urls:
           type: array
           items:
@@ -222,6 +224,8 @@ components:
           type: string
           example: "Vor einer Woche fegte ein gewaltiger Sturm über die ostlibysche Küste..."
           description: "Lead of the story"
+        image:
+          $ref: '#/components/schemas/RokkaIoImage'
 
     OpenMediaRunningAsset:
       description: "Media assets belonging to a Running of OpenMedia."
@@ -293,6 +297,27 @@ components:
           example: "2021-10-11T15:00:00Z"
           description: "The effective end time of a live publication in UTC. Only set for publicationType = 'LIVE'."
 
+    RokkaIoImage:
+      description: "Metadata about a image in rokka-io"
+      type: object
+      required: [ hash, url, format, title ]
+      properties:
+        hash:
+          type: string
+          example: "c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5"
+          description: "the identifier of the image in rokka-io"
+        url:
+          type: string
+          example: "/sourceimages/mycompany/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5"
+          description: "link to the image in rokka-io"
+        format:
+          type: string
+          example: "png"
+          description: "fileformat of the image"
+        title:
+          type: string
+          example: "image1.png"
+          description: "the filename of the image"
 
     # WhatsOn
     WhatsOnProdukt:
