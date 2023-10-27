@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: INTE PDP Components
   description: OAS Components acting as a contract for data published by INTE to PDP.
-  version: v1.4.0
+  version: v1.5.0
 paths: { }
 components:
   schemas:
@@ -194,9 +194,7 @@ components:
         urls:
           type: array
           items:
-            type: string
-            example: "https://www.srf.ch/audio/ratgeber"
-            description: "url"
+            $ref: '#/components/schemas/OpenMediaWebLink'
         publicationType:
           $ref: '#/components/schemas/PublicationType'
         beitraege:
@@ -238,7 +236,7 @@ components:
         titel:
           type: string
           example: "Kopfkissen Deluxe"
-          description: "Title for the media asset."
+          description: "Public title for the media asset."
         description:
           type: string
           example: "Mann stuetzt Kopf auf einem Wollkopfkissen."
@@ -255,6 +253,22 @@ components:
           type: string
           example: "https://programmrastervorschau-stage.s3.eu-central-1.amazonaws.com/additional-assets/AUDI20230623_RS_0015/image/kopfkissen-1337.png"
           description: "URL to the storage (Amazon S3) INTE has uploaded the media asset to."
+
+    OpenMediaWebLink:
+      description: "Weblink belonging to a Running of OpenMedia."
+      type: object
+      required:
+        - titel
+        - url
+      properties:
+        titel:
+          type: string
+          example: "Ratgeber"
+          description: "Public title for the link"
+        url:
+          type: string
+          example: "https://www.srf.ch/audio/ratgeber"
+          description: "Url"
 
     # Audio
     DigasAudioFileMetadata:
@@ -318,6 +332,18 @@ components:
           type: string
           example: "image1.png"
           description: "the filename of the image"
+        alternativetitle:
+          type: string
+          example: "image1"
+          description: "alternative title"
+        copyright:
+          type: string
+          example: "copyright"
+          description: "the copyright of the image"
+        legend:
+          type: string
+          example: "legend"
+          description: "the legend of the image"
 
     # WhatsOn
     WhatsOnProdukt:
