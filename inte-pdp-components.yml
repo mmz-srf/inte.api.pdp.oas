@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: INTE PDP Components
   description: OAS Components acting as a contract for data published by INTE to PDP.
-  version: v1.5.0
+  version: v1.5.1
 paths: { }
 components:
   schemas:
@@ -318,11 +318,11 @@ components:
       properties:
         hash:
           type: string
-          example: "c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5"
+          example: "1076fce15b5aa26d26a10d303b75186615eeb633"
           description: "the identifier of the image in rokka-io"
         url:
           type: string
-          example: "/sourceimages/mycompany/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5"
+          example: "https://srf-opme.rokka.io/Classic_4_3/1076fce15b5aa26d26a10d303b75186615eeb633.jpg"
           description: "link to the image in rokka-io"
         format:
           type: string
@@ -376,7 +376,7 @@ components:
       description: "The maturity of a OpenMediaRunning"
       nullable: false
       enum:
-        - SENDEHINWEIS
+        - EPISODENHINWEIS
         - ONLINEPUBLIKATION
 
 
