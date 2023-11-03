@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: INTE PDP Components
   description: OAS Components acting as a contract for data published by INTE to PDP.
-  version: v1.5.1
+  version: v1.5.2
 paths: { }
 components:
   schemas:
@@ -180,6 +180,16 @@ components:
           type: string
           example: "Stefan Siegenthaler"
           description: "Name of the host."
+        redaktion:
+          type: string
+          example: "SRF 1"
+          description: "Name of the editorial department."
+        mitwirkende:
+          type: array
+          items:
+            type: string
+            example: "Maria Kressbach"
+            description: "Names of the contributors."
         geplantePublikationszeit:
           type: string
           format: date-time
@@ -247,11 +257,11 @@ components:
           description: "Source from which the media asset was taken from."
         dateiname:
           type: string
-          example: "kopfkissen-1337.png"
+          example: "20230609_135816_7059_sanapur-magazin-2020.pdf"
           description: "Original filename as stored on the file-system in OpenMedia."
         url:
           type: string
-          example: "https://programmrastervorschau-stage.s3.eu-central-1.amazonaws.com/additional-assets/AUDI20230623_RS_0015/image/kopfkissen-1337.png"
+          example: "https://programmrastervorschau-stage.s3.eu-central-1.amazonaws.com/additional-assets/AUDI20230623_RS_0015/pdf/20230609_135816_7059_sanapur-magazin-2020.pdf"
           description: "URL to the storage (Amazon S3) INTE has uploaded the media asset to."
 
     OpenMediaWebLink:
