@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: INTE PDP Components
   description: OAS Components acting as a contract for data published by INTE to PDP.
-  version: v1.5.2
+  version: v1.5.3
 paths: { }
 components:
   schemas:
@@ -190,11 +190,16 @@ components:
             type: string
             example: "Maria Kressbach"
             description: "Names of the contributors."
-        geplantePublikationszeit:
+        geplantePublikationszeitAod:
           type: string
           format: date-time
           example: "2021-10-11T15:00:00Z"
           description: "The planned publication date and time in UTC."
+        geplanteSendezeit:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The planned distribution time in UTC."
         episodenlauftext:
           type: string
           example: "... langer text ..."
