@@ -1,0 +1,23 @@
+openapi: 3.0.3
+info:
+  title: INTE PDP Components for WhatsOn
+  description: OAS Components acting as a contract for data published by INTE to PDP.
+  version: v1.5.3
+paths: { }
+components:
+  schemas:
+
+    # WhatsOn
+    WhatsOnProdukt:
+      description: "Produkt aka Program planned in WhatsOn."
+      type: object
+      required: [ id ]
+      properties:
+        id:
+          type: string
+          example: "10029"
+          description: "Unique local ID of the Produkt in WhatsOn (Produkt-ID)."
+        konzeptId:
+          type: string
+          example: "A00053"
+          description: "Konzept-ID aka Angebots-ID aka Offer-ID."

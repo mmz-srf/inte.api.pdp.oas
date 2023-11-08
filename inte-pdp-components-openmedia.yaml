@@ -1,0 +1,199 @@
+openapi: 3.0.3
+info:
+  title: INTE PDP Components for OpenMedia
+  description: OAS Components acting as a contract for data published by INTE to PDP.
+  version: v1.5.3
+paths: { }
+components:
+  schemas:
+
+    # OpenMedia
+    OpenMediaRunning:
+      description: "Running aka Episode aka Program planned in OpenMedia. Internally OpenMedia uses the term Document for this Domain-Object."
+      type: object
+      required: [ id, konzeptId, produktId, titel, lead, moderation ]
+      properties:
+        id:
+          type: string
+          example: "urn:openmedia:25647147-2092-4535-a503-3db038ec7ecb:000000020088F056"
+          description: "Unique local identifier within OpenMedia."
+        konzeptId:
+          type: string
+          example: "A00397"
+          description: "Konzept-ID aka Angebots-ID aka Offer-ID."
+        produktId:
+          type: string
+          example: "AUDI20230623_RS_0015"
+          description: "Produktions-ID that OpenMedia retrieved from Digas by a look up with the Konzept-ID."
+        maturityLevel:
+          $ref: '#/components/schemas/MaturityLevel'
+        titel:
+          type: string
+          example: "Das passende Kopfkissen finden"
+          description: "Title of the story."
+        lead:
+          type: string
+          example: "Das Kopfkissen sollte nicht nur kuschelig sein, sondern in erster Linie Kopf und Nacken stützen."
+          description: "Lead aka headline of the story."
+        produzent:
+          type: string
+          example: "Maria Kressbach"
+          description: "Name of the producer."
+        moderation:
+          type: string
+          example: "Stefan Siegenthaler"
+          description: "Name of the host."
+        redaktion:
+          type: string
+          example: "SRF 1"
+          description: "Name of the editorial department."
+        mitwirkende:
+          type: array
+          items:
+            type: string
+            example: "Maria Kressbach"
+            description: "Names of the contributors."
+        geplantePublikationszeitAod:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The planned publication date and time in UTC."
+        geplanteSendezeit:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The planned distribution time in UTC."
+        episodenlauftext:
+          type: string
+          example: "... langer text ..."
+          description: "moderation text"
+        image:
+          $ref: '#/components/schemas/RokkaIoImage'
+        urls:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpenMediaWebLink'
+        publicationType:
+          $ref: '#/components/schemas/PublicationType'
+        beitraege:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpenMediaRunningBeitrag'
+        assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpenMediaRunningAsset'
+
+    OpenMediaRunningBeitrag:
+      description: "Part of a OpenMediaRunning"
+      type: object
+      required: [produktElementId, titel, lead ]
+      properties:
+        produktElementId:
+          type: string
+          example: "AUDI20230829_RS_0031_0002"
+        titel:
+          type: string
+          example: "Libyens Trauma nach den Fluten"
+          description: "Title of the story"
+        lead:
+          type: string
+          example: "Vor einer Woche fegte ein gewaltiger Sturm über die ostlibysche Küste..."
+          description: "Lead of the story"
+        image:
+          $ref: '#/components/schemas/RokkaIoImage'
+
+    OpenMediaRunningAsset:
+      description: "Media assets belonging to a Running of OpenMedia."
+      type: object
+      required:
+        - titel
+        - dateiname
+        - url
+      properties:
+        titel:
+          type: string
+          example: "Kopfkissen Deluxe"
+          description: "Public title for the media asset."
+        description:
+          type: string
+          example: "Mann stuetzt Kopf auf einem Wollkopfkissen."
+          description: "Description for the media asset."
+        source:
+          type: string
+          example: "https://www.theselfieco.com/"
+          description: "Source from which the media asset was taken from."
+        dateiname:
+          type: string
+          example: "20230609_135816_7059_sanapur-magazin-2020.pdf"
+          description: "Original filename as stored on the file-system in OpenMedia."
+        url:
+          type: string
+          example: "https://programmrastervorschau-stage.s3.eu-central-1.amazonaws.com/additional-assets/AUDI20230623_RS_0015/pdf/20230609_135816_7059_sanapur-magazin-2020.pdf"
+          description: "URL to the storage (Amazon S3) INTE has uploaded the media asset to."
+
+    OpenMediaWebLink:
+      description: "Weblink belonging to a Running of OpenMedia."
+      type: object
+      required:
+        - titel
+        - url
+      properties:
+        titel:
+          type: string
+          example: "Ratgeber"
+          description: "Public title for the link"
+        url:
+          type: string
+          example: "https://www.srf.ch/audio/ratgeber"
+          description: "Url"
+
+    RokkaIoImage:
+      description: "Metadata about a image in rokka-io"
+      type: object
+      required: [ hash, url, format, title ]
+      properties:
+        hash:
+          type: string
+          example: "1076fce15b5aa26d26a10d303b75186615eeb633"
+          description: "the identifier of the image in rokka-io"
+        url:
+          type: string
+          example: "https://srf-opme.rokka.io/Classic_4_3/1076fce15b5aa26d26a10d303b75186615eeb633.jpg"
+          description: "link to the image in rokka-io"
+        format:
+          type: string
+          example: "png"
+          description: "fileformat of the image"
+        title:
+          type: string
+          example: "image1.png"
+          description: "the filename of the image"
+        alternativetitle:
+          type: string
+          example: "image1"
+          description: "alternative title"
+        copyright:
+          type: string
+          example: "copyright"
+          description: "the copyright of the image"
+        legend:
+          type: string
+          example: "legend"
+          description: "the legend of the image"
+
+    MaturityLevel:
+      type: string
+      description: "The maturity of a OpenMediaRunning"
+      nullable: false
+      enum:
+        - EPISODENHINWEIS
+        - ONLINEPUBLIKATION
+
+    PublicationType:
+      type: string
+      description: "The type of a publication."
+      nullable: true
+      enum:
+        - FILE
+        - LIVE
