@@ -1,0 +1,186 @@
+openapi: 3.0.3
+info:
+  title: INTE PDP Components for Angebotsportfolio
+  description: OAS Components acting as a contract for data published by INTE to PDP.
+  version: v1.5.3
+paths: { }
+components:
+  schemas:
+    # Angebotsportfolio-Tool
+    Konzept:
+      description: "Konzept aka Angebot aka Campaign defined in Angebotsportfolio-Tool which also is the Master for Konzept-IDs."
+      type: object
+      required: [ id, bezeichnung ]
+      properties:
+        id:
+          type: string
+          example: "A00104"
+          description: "Konzept-ID aka Angebots-ID aka Offer-ID."
+        bezeichnung:
+          type: string
+          example: "Echo der Zeit"
+          description: "Official name of the Konzept."
+        unternehmenseinheit:
+          type: string
+          example: "SRF"
+          description: "Organisational unit that has the ownership."
+        statusName:
+          type: string
+          example: "Publiziert / Laufend"
+          description: "Status des Angebots"
+        sendungenABisZ:
+          type: boolean
+          description: "Soll Sendung in A-Z Liste erscheinen"
+        kurzbeschreibung:
+          type: string
+          example: "«Echo der Zeit» ist die älteste politische Hintergrundsendung von Radio SRF: Seit 1945 vermittelt 
+                    die Sendung täglich die wichtigsten Nachrichten, Berichte, Reportagen, Interviews und Analysen über 
+                    das aktuelle Zeitgeschehen"
+          description: "Short description of the Konzept."
+        vermarktungen:
+          type: array
+          items:
+            $ref: "#/components/schemas/KonzeptVermarktung"
+
+    KonzeptVermarktung:
+      description: "Describes for which channels and at which schedules the Sendungen of a Konzept are planned to be published."
+      type: object
+      required: [ publikationskanalId ]
+      properties:
+        publikationskanalId:
+          type: string
+          example: "K00004"
+          description: "Reference to Kanal by ID."
+        publikationsregeln:
+          type: array
+          items:
+            $ref: "#/components/schemas/KonzeptPublikationsregel"
+
+    KonzeptPublikationskanal:
+      description: "A publication-channel of SRF or a third party."
+      type: object
+      required: [ id, bezeichnung ]
+      properties:
+        id:
+          type: string
+          example: "K00004"
+          description: "Unique ID."
+        bezeichnung:
+          type: string
+          example: "Radio SRF 1@Radio"
+          description: "Official name of the channel."
+        unternehmenseinheit:
+          type: string
+          example: "SRF"
+          description: "Organisational unit that has the ownership."
+        vektor:
+          $ref: "#/components/schemas/PublicationVector"
+
+    KonzeptPublikationsregel:
+      description: "Publication rule defining when a Konzept is planned to be published and optionally in which interval."
+      type: object
+      properties:
+        start:
+          type: string
+          format: date
+          example: "2023-07-21"
+          description: "Date at which the first publication is planned."
+        ende:
+          type: string
+          format: date
+          example: "2030-07-21"
+          description: "Date at which the last publication is planned."
+        zeit:
+          type: string
+          format: "HH:mm"
+          example: "17:30"
+          description: "Time within a day at which publications are planned."
+        dauerInMin:
+          type: integer
+          example: "43"
+          description: "Duration in minutes a publication usually will take."
+        wiederholungByDay:
+          type: array
+          items:
+            $ref: "#/components/schemas/DayOfWeek"
+        wiederholungByMonth:
+          type: array
+          items:
+            $ref: "#/components/schemas/Month"
+        wiederholungByMonthWeek:
+          type: array
+          items:
+            type: integer
+          description: "Planned frequency for repetition in month-weeks. E.g. every 2nd week in a month. If combined with 'wiederholungByDay' the meaning would be e.g. 'every 2nd Monday of a month'"
+        wiederholungByMonthDay:
+          type: array
+          items:
+            type: integer
+        wiederholungsrateMinutes:
+          type: integer
+          example: "30"
+          description: "Planned frequency for repetition in minutes. E.g. every 30 minutes."
+        wiederholungsrateDays:
+          type: integer
+          example: "3"
+          description: "Planned frequency for repetition in days. E.g. every 3 days."
+        wiederholungsrateWeeks:
+          type: integer
+          example: "2"
+          description: "Planned frequency for repetition in weeks. E.g. every 2 weeks."
+        wiederholungsrateMonths:
+          type: integer
+          example: "6"
+          description: "Planned frequency for repetition in months. E.g. every 6 months."
+        erstausstrahlung:
+          type: boolean
+          example: "true"
+          description: "Indicates whether this publication rule concerns the first publication or not."
+        ausnahmen:
+          type: array
+          description: "Specific dates at which a Sendung of the Konzept shall not be published."
+          items:
+            type: string
+            format: date
+            example: "2023-10-11"
+
+    PublicationVector:
+      type: string
+      description: "The vector for publication."
+      nullable: true
+      enum:
+        - DIGITAL
+        - PRINT
+        - RADIO
+        - TV
+
+    DayOfWeek:
+      type: string
+      description: "Day of week."
+      nullable: false
+      enum:
+        - MONDAY
+        - TUESDAY
+        - WEDNESDAY
+        - THURSDAY
+        - FRIDAY
+        - SATURDAY
+        - SUNDAY
+
+    Month:
+      type: string
+      description: "Month"
+      nullable: false
+      enum:
+        - JANUARY
+        - FEBRUARY
+        - MARCH
+        - APRIL
+        - MAY
+        - JUNE
+        - JULY
+        - AUGUST
+        - SEPTEMBER
+        - OCTOBER
+        - NOVEMBER
+        - DECEMBER

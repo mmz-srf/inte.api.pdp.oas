@@ -1,0 +1,65 @@
+openapi: 3.0.3
+info:
+  title: INTE PDP Components for Digas
+  description: OAS Components acting as a contract for data published by INTE to PDP.
+  version: v1.5.3
+paths: { }
+components:
+  schemas:
+
+    DigasAudioFileMetadata:
+      description: "Metadata about a published audio file"
+      required: [ konzeptId, produktId, fassungsId, url, publicationType ]
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/MediaType"
+        konzeptId:
+          type: string
+          example: "A00125"
+        produktId:
+          type: string
+          example: "AUDI20230905_RS_0006"
+        produktElementId:
+          type: string
+          example: "AUDI20230905_RS_0006_0002"
+        fassungsId:
+          type: string
+          example: "AUDI20230905_RS_0006_APP_02"
+        titel:
+          type: string
+          example: "Espresso"
+          description: "Title representing the content of the media asset. Possibly not a public title."
+        url:
+          type: string
+          example: "https://srf-media-storage-stage.s3.eu-central-1.amazonaws.com/incoming-audio/AUDI20230905_RS_0006/audio/AUDI20230905_RS_0006_APP_01.wav"
+          description: "URL to the storage (Amazon S3) INTE has uploaded the media asset to."
+        publicationType:
+          $ref: '#/components/schemas/PublicationType'
+        liveSendezeitStart:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The effective start time of a live publication in UTC. Only set for publicationType = 'LIVE'."
+        liveSendezeitEnde:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The effective end time of a live publication in UTC. Only set for publicationType = 'LIVE'."
+
+    MediaType:
+      type: string
+      description: "Media File Type"
+      nullable: false
+      enum:
+        - VIDEO
+        - AUDIO
+
+    PublicationType:
+      type: string
+      description: "The type of a publication."
+      nullable: true
+      enum:
+        - FILE
+        - LIVE
+
