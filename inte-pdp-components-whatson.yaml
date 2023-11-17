@@ -2,12 +2,11 @@ openapi: 3.0.3
 info:
   title: INTE PDP Components for WhatsOn
   description: OAS Components acting as a contract for data published by INTE to PDP.
-  version: v1.5.3
+  version: 1.5.3
 paths: { }
 components:
   schemas:
 
-    # WhatsOn
     WhatsOnProdukt:
       description: "Produkt aka Program planned in WhatsOn."
       type: object

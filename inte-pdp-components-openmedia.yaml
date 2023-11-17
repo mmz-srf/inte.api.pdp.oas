@@ -2,12 +2,11 @@ openapi: 3.0.3
 info:
   title: INTE PDP Components for OpenMedia
   description: OAS Components acting as a contract for data published by INTE to PDP.
-  version: v1.5.3
+  version: 1.5.3
 paths: { }
 components:
   schemas:
 
-    # OpenMedia
     OpenMediaRunning:
       description: "Running aka Episode aka Program planned in OpenMedia. Internally OpenMedia uses the term Document for this Domain-Object."
       type: object

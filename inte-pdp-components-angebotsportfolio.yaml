@@ -2,11 +2,11 @@ openapi: 3.0.3
 info:
   title: INTE PDP Components for Angebotsportfolio
   description: OAS Components acting as a contract for data published by INTE to PDP.
-  version: v1.5.3
+  version: 1.5.3
 paths: { }
 components:
   schemas:
-    # Angebotsportfolio-Tool
+
     Konzept:
       description: "Konzept aka Angebot aka Campaign defined in Angebotsportfolio-Tool which also is the Master for Konzept-IDs."
       type: object
