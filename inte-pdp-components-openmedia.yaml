@@ -150,28 +150,24 @@ components:
     RokkaIoImage:
       description: "Metadata about a image in rokka-io"
       type: object
-      required: [ hash, url, format, title ]
+      required: [ hash, urls, title ]
       properties:
         hash:
           type: string
           example: "1076fce15b5aa26d26a10d303b75186615eeb633"
-          description: "the identifier of the image in rokka-io"
-        url:
-          type: string
-          example: "https://srf-opme.rokka.io/Classic_4_3/1076fce15b5aa26d26a10d303b75186615eeb633.jpg"
-          description: "link to the image in rokka-io"
-        format:
-          type: string
-          example: "png"
-          description: "fileformat of the image"
+          description: "the identifier of the image in rokka.io"
+        urls:
+          type: array
+          items:
+            $ref: '#/components/schemas/RokkaioImageUrl'
         title:
           type: string
-          example: "image1.png"
-          description: "the filename of the image"
-        alternativetitle:
+          example: "Train line"
+          description: "Title of the image"
+        alternativeTitle:
           type: string
-          example: "image1"
-          description: "alternative title"
+          example: "Train line with city background"
+          description: "Alternative title"
         copyright:
           type: string
           example: "copyright"
@@ -180,6 +176,19 @@ components:
           type: string
           example: "legend"
           description: "the legend of the image"
+
+    RokkaioImageUrl:
+      description: "Rokka.io image url which can be called with different stacks"
+      type: object
+      properties:
+        stack:
+          type: string
+          description: "Rokka.io stack for the image"
+          example: "square_1_1"
+        url:
+          type: string
+          description: "Rokka.io image url with complete stack and format"
+          example: "https://srf-opme.rokka.io/landscape_16_9/1076fce15b5aa26d26a10d303b75186615eeb633.webp"
 
     MaturityLevel:
       type: string
