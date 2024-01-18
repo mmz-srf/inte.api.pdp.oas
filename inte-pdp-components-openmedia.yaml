@@ -159,7 +159,7 @@ components:
         urls:
           type: array
           items:
-            $ref: '#/components/schemas/RokkaioImageUrl'
+            $ref: '#/components/schemas/RokkaIoImageUrl'
         title:
           type: string
           example: "Train line"
@@ -177,7 +177,7 @@ components:
           example: "legend"
           description: "the legend of the image"
 
-    RokkaioImageUrl:
+    RokkaIoImageUrl:
       description: "Rokka.io image url which can be called with different stacks"
       type: object
       properties:
