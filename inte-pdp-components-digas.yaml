@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: INTE PDP Components for Digas
   description: OAS Components acting as a contract for data published by INTE to PDP.
-  version: 1.5.3
+  version: 1.6.0
 paths: { }
 components:
   schemas:
