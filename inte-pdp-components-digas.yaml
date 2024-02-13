@@ -9,7 +9,7 @@ components:
 
     DigasAudioFileMetadata:
       description: "Metadata about a published audio file"
-      required: [ konzeptId, produktId, fassungsId, url, publicationType ]
+      required: [ konzeptId, produktId, fassungsId, publicationType ]
       type: object
       properties:
         type:
@@ -30,10 +30,6 @@ components:
           type: string
           example: "Espresso"
           description: "Title representing the content of the media asset. Possibly not a public title."
-        url:
-          type: string
-          example: "https://srf-media-storage-stage.s3.eu-central-1.amazonaws.com/incoming-audio/AUDI20230905_RS_0006/audio/AUDI20230905_RS_0006_APP_01.wav"
-          description: "URL to the storage (Amazon S3) INTE has uploaded the media asset to."
         publicationType:
           $ref: '#/components/schemas/PublicationType'
         liveSendezeitStart:
