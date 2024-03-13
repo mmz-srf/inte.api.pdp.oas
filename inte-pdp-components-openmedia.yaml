@@ -57,6 +57,11 @@ components:
           format: date-time
           example: "2021-10-11T15:00:00Z"
           description: "The planned publication date and time in UTC."
+        gueltigkeitAod:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The valid publication date and time in UTC."
         geplanteSendezeit:
           type: string
           format: date-time
