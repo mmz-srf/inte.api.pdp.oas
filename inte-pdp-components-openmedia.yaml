@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: INTE PDP Components for OpenMedia
   description: OAS Components acting as a contract for data published by INTE to PDP.
-  version: 1.5.3
+  version: 1.5.4
 paths: { }
 components:
   schemas:
