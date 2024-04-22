@@ -10,7 +10,7 @@ components:
     OpenMediaRunning:
       description: "Running aka Episode aka Program planned in OpenMedia. Internally OpenMedia uses the term Document for this Domain-Object."
       type: object
-      required: [ id, konzeptId, produktId, titel, lead, moderation ]
+      required: [ id, konzeptId, produktId, titel, lead, moderation, blocked, geoBlocked ]
       properties:
         id:
           type: string
@@ -71,6 +71,12 @@ components:
           type: string
           example: "... langer text ..."
           description: "moderation text"
+        blocked:
+          type: boolean
+          description: "Can the audio be played or not?"
+        geoBlocked:
+          type: boolean
+          description: "Can the audio be played in countries other than Switzerland?"
         image:
           $ref: '#/components/schemas/RokkaIoImage'
         urls:
