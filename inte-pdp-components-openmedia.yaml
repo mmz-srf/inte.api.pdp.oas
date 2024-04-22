@@ -10,7 +10,7 @@ components:
     OpenMediaRunning:
       description: "Running aka Episode aka Program planned in OpenMedia. Internally OpenMedia uses the term Document for this Domain-Object."
       type: object
-      required: [ id, konzeptId, produktId, titel, lead, moderation, blocked, geoBlocked ]
+      required: [ id, konzeptId, produktId, titel, lead, blocked, geoBlocked ]
       properties:
         id:
           type: string
@@ -34,18 +34,14 @@ components:
           type: string
           example: "Das Kopfkissen sollte nicht nur kuschelig sein, sondern in erster Linie Kopf und Nacken stützen."
           description: "Lead aka headline of the story."
-        produzent:
-          type: string
-          example: "Maria Kressbach"
-          description: "Name of the producer."
         moderation:
           type: string
-          example: "Stefan Siegenthaler"
+          example: "Christina Scheidegger"
           description: "Name of the host."
         redaktion:
           type: string
-          example: "SRF 1"
-          description: "Name of the editorial department."
+          example: "Lukas Schneider"
+          description: "Name of the editor."
         mitwirkende:
           type: array
           items:
@@ -110,6 +106,10 @@ components:
           type: string
           example: "Vor einer Woche fegte ein gewaltiger Sturm über die ostlibysche Küste..."
           description: "Lead of the story"
+        autor:
+          type: string
+          example: "Michael Siegenthaler"
+          description: "Name of the author"
         image:
           $ref: '#/components/schemas/RokkaIoImage'
 
