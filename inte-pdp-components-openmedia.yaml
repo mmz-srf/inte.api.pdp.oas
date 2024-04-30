@@ -72,7 +72,7 @@ components:
           description: "Can the audio be played or not?"
         geoBlocked:
           type: boolean
-          description: "Can the audio be played in countries other than Switzerland?"
+          description: "true: blocked outside Switzerland, false: not blocked anywhere"
         image:
           $ref: '#/components/schemas/RokkaIoImage'
         urls:
