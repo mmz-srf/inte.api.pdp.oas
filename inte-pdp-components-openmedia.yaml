@@ -10,9 +10,9 @@ components:
     OpenMediaAudioProgram:
       description: "Running aka Episode aka Program planned in OpenMedia. Internally OpenMedia uses the term Document for this Domain-Object."
       type: object
-      required: [ id, konzeptId, produktId ]
+      required: [ urn, konzeptId, produktId ]
       properties:
-        id:
+        urn:
           type: string
           example: "urn:openmedia:25647147-2092-4535-a503-3db038ec7ecb:000000020088F056"
           description: "Unique local identifier within OpenMedia."
@@ -24,6 +24,10 @@ components:
           type: string
           example: "AUDI20230623_RS_0015"
           description: "Produktions-ID aka PID."
+        fassungId:
+          type: string
+          example: "AUDI20240506_NR_0013_APP_02"
+          description: "Fassung-ID generated during Online-Publication workflow of INTE. Never set for programs with maturity-level EPISODENHINWEIS."
         maturityLevel:
           $ref: '#/components/schemas/MaturityLevel'
         titel:
@@ -85,7 +89,7 @@ components:
     OpenMediaRunningBeitrag:
       description: "Part of a OpenMediaRunning"
       type: object
-      required: [produktElementId ]
+      required: [ produktElementId ]
       properties:
         produktElementId:
           type: string
@@ -108,7 +112,7 @@ components:
     OpenMediaAudio:
       description: "Metadata and reference of the Audio of the program. Not present for Live-products."
       type: object
-      required: [filename, url ]
+      required: [ filename, url ]
       properties:
         filename:
           type: string
