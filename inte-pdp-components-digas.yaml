@@ -1,0 +1,73 @@
+openapi: 3.0.3
+info:
+  title: INTE PDP Components for Digas
+  description: OAS Components acting as a contract for data published by INTE to PDP.
+  version: 1.0.0
+paths: { }
+components:
+  schemas:
+
+    DigasAudioProgram:
+      description: "Audio-Program that was live broadcast on a radio-channel"
+      type: object
+      required: [  konzeptId, produktId, radioChannel, start, end ]
+      properties:
+        konzeptId:
+          type: string
+          example: "A00397"
+          description: "Konzept-ID aka Angebots-ID aka Offer-ID."
+        produktId:
+          type: string
+          example: "AUDI20230623_RS_0015"
+          description: "Produktions-ID aka PID."
+        radioChannel:
+          $ref: '#/components/schemas/RadioChannel'
+        plannedStart:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The planned start date/time in UTC."
+        plannedEnd:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The planned end date/time in UTC."
+        start:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The effective start date/time in UTC."
+        end:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The effective start date/time in UTC."
+        audio:
+          $ref: '#/components/schemas/DigasAudio'
+
+    RadioChannel:
+      type: string
+      description: "The radio-channel a program was broadcast."
+      nullable: false
+      enum:
+        - SRF_1
+        - SRF_2
+        - SRF_3
+        - SRF_4_NEWS
+        - SRF_MUSIKWELLE
+        - SRF_VIRUS
+        - RTR_EMISSIUN
+
+    DigasAudio:
+      description: "Metadata and reference of the Audio of the program."
+      type: object
+      required: [ filename, url ]
+      properties:
+        filename:
+          type: string
+          example: "AUDI20240506_NR_0013_APP_02.mp3"
+          description: "Filename of the uploaded audio-file."
+        url:
+          type: string
+          example: "https://programmrastervorschau-stage.s3.eu-central-1.amazonaws.com/incoming-audio/AUDI20240506_NR_0013/AUDI20240506_NR_0013_APP_02.mp3"
+          description: "URL to the storage (Amazon S3) INTE has uploaded the audio-file to."
