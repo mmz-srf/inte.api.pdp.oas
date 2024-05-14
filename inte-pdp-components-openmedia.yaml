@@ -2,15 +2,15 @@ openapi: 3.0.3
 info:
   title: INTE PDP Components for OpenMedia
   description: OAS Components acting as a contract for data published by INTE to PDP.
-  version: 1.6.0
+  version: 2.0.0
 paths: { }
 components:
   schemas:
 
-    OpenMediaRunning:
+    OpenMediaAudioProgram:
       description: "Running aka Episode aka Program planned in OpenMedia. Internally OpenMedia uses the term Document for this Domain-Object."
       type: object
-      required: [ id, konzeptId, produktId, titel, lead, blocked, geoBlocked ]
+      required: [ id, konzeptId, produktId ]
       properties:
         id:
           type: string
@@ -23,7 +23,7 @@ components:
         produktId:
           type: string
           example: "AUDI20230623_RS_0015"
-          description: "Produktions-ID that OpenMedia retrieved from Digas by a look up with the Konzept-ID."
+          description: "Produktions-ID aka PID."
         maturityLevel:
           $ref: '#/components/schemas/MaturityLevel'
         titel:
@@ -42,12 +42,6 @@ components:
           type: string
           example: "Lukas Schneider"
           description: "Name of the editor."
-        mitwirkende:
-          type: array
-          items:
-            type: string
-            example: "Maria Kressbach"
-            description: "Names of the contributors."
         geplantePublikationszeitAod:
           type: string
           format: date-time
@@ -75,25 +69,23 @@ components:
           description: "true: blocked outside Switzerland, false: not blocked anywhere"
         image:
           $ref: '#/components/schemas/RokkaIoImage'
-        urls:
+        audio:
+          $ref: '#/components/schemas/OpenMediaAudio'
+        attachments:
           type: array
           items:
-            $ref: '#/components/schemas/OpenMediaWebLink'
+            $ref: '#/components/schemas/OpenMediaAttachment'
         publicationType:
           $ref: '#/components/schemas/PublicationType'
         beitraege:
           type: array
           items:
             $ref: '#/components/schemas/OpenMediaRunningBeitrag'
-        assets:
-          type: array
-          items:
-            $ref: '#/components/schemas/OpenMediaRunningAsset'
 
     OpenMediaRunningBeitrag:
       description: "Part of a OpenMediaRunning"
       type: object
-      required: [produktElementId, titel, lead ]
+      required: [produktElementId ]
       properties:
         produktElementId:
           type: string
@@ -113,50 +105,34 @@ components:
         image:
           $ref: '#/components/schemas/RokkaIoImage'
 
-    OpenMediaRunningAsset:
-      description: "Media assets belonging to a Running of OpenMedia."
+    OpenMediaAudio:
+      description: "Metadata and reference of the Audio of the program. Not present for Live-products."
       type: object
-      required:
-        - titel
-        - dateiname
-        - url
+      required: [filename, url ]
       properties:
-        titel:
+        filename:
+          type: string
+          example: "AUDI20240506_NR_0013_APP_02.mp3"
+          description: "Filename of the uploaded audio-file."
+        url:
+          type: string
+          example: "https://programmrastervorschau-stage.s3.eu-central-1.amazonaws.com/incoming-audio/AUDI20240506_NR_0013/AUDI20240506_NR_0013_APP_02.mp3"
+          description: "URL to the storage (Amazon S3) INTE has uploaded the audio-file to."
+
+
+    OpenMediaAttachment:
+      description: "Metadata and reference of the attachments (PDFs, Links) of the program."
+      type: object
+      required: [ url ]
+      properties:
+        name:
           type: string
           example: "Kopfkissen Deluxe"
-          description: "Public title for the media asset."
-        description:
-          type: string
-          example: "Mann stuetzt Kopf auf einem Wollkopfkissen."
-          description: "Description for the media asset."
-        source:
-          type: string
-          example: "https://www.theselfieco.com/"
-          description: "Source from which the media asset was taken from."
-        dateiname:
-          type: string
-          example: "20230609_135816_7059_sanapur-magazin-2020.pdf"
-          description: "Original filename as stored on the file-system in OpenMedia."
+          description: "Public title for the attachment."
         url:
           type: string
           example: "https://programmrastervorschau-stage.s3.eu-central-1.amazonaws.com/additional-assets/AUDI20230623_RS_0015/pdf/20230609_135816_7059_sanapur-magazin-2020.pdf"
           description: "URL to the storage (Amazon S3) INTE has uploaded the media asset to."
-
-    OpenMediaWebLink:
-      description: "Weblink belonging to a Running of OpenMedia."
-      type: object
-      required:
-        - titel
-        - url
-      properties:
-        titel:
-          type: string
-          example: "Ratgeber"
-          description: "Public title for the link"
-        url:
-          type: string
-          example: "https://www.srf.ch/audio/ratgeber"
-          description: "Url"
 
     RokkaIoImage:
       description: "Metadata about a image in rokka-io"
