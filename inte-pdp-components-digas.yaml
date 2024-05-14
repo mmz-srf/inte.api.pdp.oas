@@ -20,6 +20,10 @@ components:
           type: string
           example: "AUDI20230623_RS_0015"
           description: "Produktions-ID aka PID."
+        fassungId:
+          type: string
+          example: "AUDI20240506_NR_0013_APP_02"
+          description: "Fassung-ID generated during Live-product aired workflow of INTE."
         radioChannel:
           $ref: '#/components/schemas/RadioChannel'
         plannedStart:
