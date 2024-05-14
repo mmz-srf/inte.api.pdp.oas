@@ -24,6 +24,10 @@ components:
           type: string
           example: "AUDI20240506_NR_0013_APP_02"
           description: "Fassung-ID generated during Live-product aired workflow of INTE."
+        titel:
+          type: string
+          example: "Das passende Kopfkissen finden"
+          description: "Title of the story."
         radioChannel:
           $ref: '#/components/schemas/RadioChannel'
         plannedStart:
