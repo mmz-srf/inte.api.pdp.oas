@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: INTE PDP Components for OpenMedia
   description: OAS Components acting as a contract for data published by INTE to PDP.
-  version: 2.0.0
+  version: 2.0.1
 paths: { }
 components:
   schemas:
@@ -50,12 +50,17 @@ components:
           type: string
           format: date-time
           example: "2021-10-11T15:00:00Z"
-          description: "The planned publication date and time in UTC."
+          description: "The planned publication date of Aod and Podcast and time in UTC."
         gueltigkeitAod:
           type: string
           format: date-time
           example: "2021-10-11T15:00:00Z"
-          description: "The valid publication date and time in UTC."
+          description: "The valid publication date of Aod and time in UTC."
+        gueltigkeitPodcast:
+          type: string
+          format: date-time
+          example: "2021-10-11T15:00:00Z"
+          description: "The valid publication date of Podcast and time in UTC."
         geplanteSendezeit:
           type: string
           format: date-time
