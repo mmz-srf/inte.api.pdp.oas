@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: INTE PDP Components for OpenMedia
   description: OAS Components acting as a contract for data published by INTE to PDP.
-  version: 2.0.1
+  version: 2.0.2
 paths: { }
 components:
   schemas:
@@ -132,7 +132,6 @@ components:
     OpenMediaAttachment:
       description: "Metadata and reference of the attachments (PDFs, Links) of the program."
       type: object
-      required: [ url ]
       properties:
         name:
           type: string
