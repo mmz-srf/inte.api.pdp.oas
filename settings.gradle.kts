@@ -1,1 +1,1 @@
-rootProject.name = 'api.pdp-oas'
+rootProject.name = "api.pdp-oas"
